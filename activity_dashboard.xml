@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:background="#000000"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/statusText"
-        android:text="حالة النظام"
-        android:textColor="#00FF00"
-        android:textSize="18sp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/vpnStatusText"
-        android:text="VPN"
-        android:textColor="#CCCCCC"
-        android:textSize="16sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/statusText"
+            android:text="جاهز للتنفيذ"
+            android:textColor="#00FF00"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/accountCountText"
-        android:text="الحسابات الجاهزة: ..."
-        android:textColor="#CCCCCC"
-        android:textSize="16sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        <Button
+            android:id="@+id/btnStartAttack"
+            android:text="بدء الهجوم الآن"
+            android:textColor="#FFFFFF"
+            android:background="#CC0000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnLaunch"
-        android:text="إطلاق الهجوم الآن"
-        android:textColor="#FFFFFF"
-        android:background="#8B0000"
-        android:layout_marginTop="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnSettings"
+            android:text="إعدادات التحكم"
+            android:textColor="#FFFFFF"
+            android:background="#333399"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnSettings"
-        android:text="إعدادات التحكم"
-        android:textColor="#FFFFFF"
-        android:background="#333399"
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnChangeTarget"
+            android:text="تغيير الرقم المستهدف"
+            android:textColor="#FFFFFF"
+            android:background="#006666"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnViewLogs"
+            android:text="عرض سجل البلاغات"
+            android:textColor="#FFFFFF"
+            android:background="#444444"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>
