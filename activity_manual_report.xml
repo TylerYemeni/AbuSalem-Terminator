@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/vpnStatus"
+        android:text="VPN غير مفعل"
+        android:textColor="#00FF00"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editPhoneNumber"
+        android:hint="أدخل رقم الهاتف المستهدف"
+        android:inputType="phone"
+        android:textColorHint="#888888"
+        android:textColor="#FFFFFF"
+        android:background="#222222"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/spinnerReportType"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#333333"
+        android:popupBackground="#222222"
+        android:spinnerMode="dropdown" />
+
+    <Button
+        android:id="@+id/btnSendReport"
+        android:text="إرسال البلاغ"
+        android:background="#AA0000"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
