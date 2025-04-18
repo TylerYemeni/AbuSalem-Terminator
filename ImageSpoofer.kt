@@ -1,39 +1,60 @@
-package com.abusalem.guard
+package com.abusalem.guard.spoof
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
-import java.io.File
-import java.io.InputStream
-import kotlin.random.Random
+import android.provider.MediaStore
+import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.util.*
 
 object ImageSpoofer {
 
-    fun getRandomProfileImage(context: Context): Bitmap? {
-        val fakeImagesDir = File(context.filesDir, "fake_images")
-
-        if (!fakeImagesDir.exists() || fakeImagesDir.listFiles().isNullOrEmpty()) {
-            return null
+    suspend fun sendRandomImage(context: Context, fakeAccountId: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                val imageUri = getRandomImageFromGallery(context)
+                if (imageUri != null) {
+                    val caption = getRandomCaption()
+                    // هنا ترسل الصورة من خلال الحساب الوهمي
+                    Log.i("Spoofer", "[$fakeAccountId] إرسال صورة: $imageUri مع وصف: $caption")
+                    
+                    delayRealistic()
+                    true
+                } else {
+                    Log.w("Spoofer", "[$fakeAccountId] لم يتم العثور على صورة")
+                    false
+                }
+            } catch (e: Exception) {
+                Log.e("Spoofer", "[$fakeAccountId] فشل في إرسال صورة: ${e.message}")
+                false
+            }
         }
-
-        val imageFiles = fakeImagesDir.listFiles()!!.filter { it.extension in listOf("jpg", "png") }
-        if (imageFiles.isEmpty()) return null
-
-        val selectedImage = imageFiles[Random.nextInt(imageFiles.size)]
-
-        return BitmapFactory.decodeFile(selectedImage.absolutePath)
     }
 
-    fun attachImageToAccount(context: Context, account: FakeAccount): Boolean {
-        val bitmap = getRandomProfileImage(context)
-        return if (bitmap != null) {
-            // إرسال الصورة لواتساب أو إضافتها للحساب
-            Log.d("ImageSpoofer", "تم إرفاق صورة وهمية للحساب ${account.name}")
-            true
-        } else {
-            Log.w("ImageSpoofer", "لا توجد صور وهمية في الجهاز")
-            false
+    private fun getRandomImageFromGallery(context: Context): Uri? {
+        val projection = arrayOf(MediaStore.Images.Media._ID)
+        val cursor = context.contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            projection, null, null, null
+        )
+        cursor?.use {
+            if (it.count > 0) {
+                val randomIndex = Random().nextInt(it.count)
+                it.moveToPosition(randomIndex)
+                val id = it.getLong(0)
+                return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toString())
+            }
         }
+        return null
+    }
+
+    private fun getRandomCaption(): String {
+        val captions = listOf("تحقق من هذا", "صورة جديدة", "من يومياتي", "لقطة مميزة")
+        return captions.random()
+    }
+
+    private fun delayRealistic() {
+        Thread.sleep((2000..5000).random().toLong())
     }
 }
