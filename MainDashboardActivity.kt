@@ -4,19 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.abusalem.guard.R
-import com.abusalem.guard.logs.ReportLogger
-import com.abusalem.guard.manager.ControlPanelDialog
-import com.abusalem.guard.sender.ParallelReportSenderWithImages
+import com.abusalem.guard.dialogs.PasswordDialog
+import com.abusalem.guard.dialogs.TargetNumberDialog
+import com.abusalem.guard.logger.ReportLogger
 
 class MainDashboardActivity : AppCompatActivity() {
 
+    private lateinit var statusText: TextView
     private lateinit var btnStartAttack: Button
-    private lateinit var btnSettings: Button
     private lateinit var btnChangeTarget: Button
     private lateinit var btnViewLogs: Button
-    private lateinit var statusText: TextView
+    private lateinit var btnAdvancedControl: Button
+    private lateinit var btnQuickAttack: Button
+    private lateinit var btnVPNControl: Button
 
     private var targetNumber: String = "+967712345678"
 
@@ -24,39 +27,48 @@ class MainDashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        statusText = findViewById(R.id.statusText)
         btnStartAttack = findViewById(R.id.btnStartAttack)
-        btnSettings = findViewById(R.id.btnSettings)
         btnChangeTarget = findViewById(R.id.btnChangeTarget)
         btnViewLogs = findViewById(R.id.btnViewLogs)
-        statusText = findViewById(R.id.statusText)
+        btnAdvancedControl = findViewById(R.id.btnAdvancedControl)
+        btnQuickAttack = findViewById(R.id.btnQuickAttack)
+        btnVPNControl = findViewById(R.id.btnVPNControl)
+
+        statusText.text = "الهدف الحالي: $targetNumber"
 
         btnStartAttack.setOnClickListener {
-            ParallelReportSenderWithImages.sendReportsInParallel(
-                this,
-                listOf("acc01", "acc02", "acc03"), // استبدل بقائمة حساباتك الوهمية
-                targetNumber
-            )
-            statusText.text = "جاري إرسال البلاغات على $targetNumber"
-            ReportLogger.log("بدأت عملية البلاغات على $targetNumber")
-        }
-
-        btnSettings.setOnClickListener {
-            val dialog = ControlPanelDialog(this)
-            dialog.show()
+            Toast.makeText(this, "بدء الهجوم على $targetNumber", Toast.LENGTH_SHORT).show()
+            // ابدأ الهجوم الفعلي من هنا
         }
 
         btnChangeTarget.setOnClickListener {
             val dialog = TargetNumberDialog(this) { newNumber ->
                 targetNumber = newNumber
                 statusText.text = "تم تعيين الهدف: $targetNumber"
-                ReportLogger.log("تم تغيير الهدف إلى $targetNumber")
             }
             dialog.show()
         }
 
         btnViewLogs.setOnClickListener {
-            val intent = Intent(this, LogsViewerActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, LogsViewerActivity::class.java))
         }
+
+        btnAdvancedControl.setOnClickListener {
+            startActivity(Intent(this, AttackControlActivity::class.java))
+        }
+
+        btnQuickAttack.setOnClickListener {
+            Toast.makeText(this, "الهجوم السريع غير مفعل بعد", Toast.LENGTH_SHORT).show()
+        }
+
+        btnVPNControl.setOnClickListener {
+            Toast.makeText(this, "تبديل VPN...", Toast.LENGTH_SHORT).show()
+            // استدعاء VPNManager للتبديل
+        }
+
+        PasswordDialog(this) {
+            Toast.makeText(this, "تم الدخول بنجاح!", Toast.LENGTH_SHORT).show()
+        }.show()
     }
 }
