@@ -1,33 +1,22 @@
-package com.abusalem.whatsapp_guardian.engine
+package com.abusalem.guard.engine
 
+import android.content.Context
 import android.util.Log
-import com.abusalem.whatsapp_guardian.network.VPNManager
+import com.abusalem.guard.logger.ReportLogger
+import com.abusalem.guard.spoof.WebImageSpoofer
 import kotlinx.coroutines.*
 
 object AdvancedReportHandler {
-    suspend fun sendMassReports(numbers: List<String>, reportType: String) = coroutineScope {
-        numbers.forEach { number ->
-            launch {
-                try {
-                    VPNManager.rotateIP() // تبديل VPN لكل بلاغ
-                    delay((500..2000).random().toLong())
 
-                    // محاكاة إرسال البلاغ
-                    Log.d("بلاغ", "تم إرسال بلاغ على $number بنوع $reportType")
-
-                    // تحليل الرد (تمويه - اختراق - قبول)
-                    analyzeResponse(number)
-
-                } catch (e: Exception) {
-                    Log.e("بلاغ", "فشل في إرسال البلاغ على $number: ${e.message}")
-                }
+    fun handleReport(context: Context, accountId: String, targetNumber: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                WebImageSpoofer.sendRandomImageFromWeb(context, accountId)
+                RealisticReportEngine.simulateReport(accountId, targetNumber)
+                ReportLogger.log("[$accountId] تم تنفيذ البلاغ على $targetNumber")
+            } catch (e: Exception) {
+                Log.e("AdvancedReport", "فشل بلاغ $accountId على $targetNumber: ${e.message}")
             }
         }
-    }
-
-    private fun analyzeResponse(number: String) {
-        val responses = listOf("تم الاستلام", "قيد المراجعة", "محظور", "تم الإبلاغ مسبقًا")
-        val chosen = responses.random()
-        Log.d("رد واتساب", "الرد على $number: $chosen")
     }
 }
