@@ -1,49 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="24dp"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     android:background="#000000">
 
-    <EditText
-        android:id="@+id/inputAttacksPerMinute"
-        android:hint="عدد الهجمات في الدقيقة"
-        android:textColorHint="#AAAAAA"
-        android:inputType="number"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:background="@android:drawable/edit_text" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/inputAccountsPerAttack"
-        android:hint="عدد الحسابات لكل هجوم"
-        android:textColorHint="#AAAAAA"
-        android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:background="@android:drawable/edit_text"
-        android:layout_marginTop="10dp" />
+        <TextView
+            android:text="إعدادات التحكم"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#00FF00"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center"/>
 
-    <EditText
-        android:id="@+id/inputDelayMillis"
-        android:hint="التأخير بين الهجمات (مللي ثانية)"
-        android:textColorHint="#AAAAAA"
-        android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:background="@android:drawable/edit_text"
-        android:layout_marginTop="10dp" />
+        <TextView
+            android:text="عدد الحسابات الوهمية:"
+            android:textColor="#FFFFFF"/>
+        <EditText
+            android:id="@+id/inputAccounts"
+            android:hint="مثلاً: 20"
+            android:inputType="number"
+            android:textColor="#FFFFFF"
+            android:background="#222222"
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/btnApplySettings"
-        android:text="تطبيق الإعدادات"
-        android:textColor="#FFFFFF"
-        android:background="#2E8B57"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
-</LinearLayout>
+        <TextView
+            android:text="عدد البلاغات في الدقيقة:"
+            android:textColor="#FFFFFF"/>
+        <EditText
+            android:id="@+id/inputSpeed"
+            android:hint="مثلاً: 100"
+            android:inputType="number"
+            android:textColor="#FFFFFF"
+            android:background="#222222"
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="عدد الصور في كل بلاغ:"
+            android:textColor="#FFFFFF"/>
+        <EditText
+            android:id="@+id/inputImagesPerReport"
+            android:hint="مثلاً: 2"
+            android:inputType="number"
+            android:textColor="#FFFFFF"
+            android:background="#222222"
+            android:layout_marginBottom="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnApplyControl"
+            android:text="تطبيق الإعدادات"
+            android:textColor="#FFFFFF"
+            android:background="#009900"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
