@@ -1,19 +1,34 @@
 package com.abusalem.guard
 
 import android.content.Context
-import android.content.Intent
-import android.net.VpnService
 import android.util.Log
+import java.io.File
 
 object VPNManager {
-    fun switchVPN(context: Context) {
+
+    private var currentVPNProfile: String? = null
+
+    fun initialize(context: Context) {
+        Log.d("VPNManager", "تم تهيئة مدير VPN")
+        // تحميل ملفات VPN أو إعدادات
+    }
+
+    fun switchVPN(profileName: String) {
+        currentVPNProfile = profileName
+        Log.d("VPNManager", "تبديل VPN إلى: $profileName")
+
+        // تنفيذ الاتصال بـ VPN فعلي (OpenVPN - V2Ray - WireGuard)
+        // هذا يعتمد على صلاحيات الروت أو صلاحيات VPN App Installed
         try {
-            val intent = Intent("com.example.vpn.ACTION_SWITCH") // اسم وهمي لتطبيق VPN
-            intent.setPackage("org.torproject.android") // مثل Orbot (يمكن تغييره حسب التطبيق المثبت)
-            context.sendBroadcast(intent)
-            Log.d("VPNManager", "تم إرسال أمر تغيير الـ VPN")
+            val process = Runtime.getRuntime().exec("am startservice --user 0 -n com.vpn.app/.VpnService --es profile $profileName")
+            process.waitFor()
         } catch (e: Exception) {
-            Log.e("VPNManager", "فشل في تغيير VPN: ${e.message}")
+            Log.e("VPNManager", "فشل التبديل: ${e.message}")
         }
+    }
+
+    fun disconnect() {
+        Log.d("VPNManager", "فصل VPN")
+        Runtime.getRuntime().exec("am stopservice --user 0 -n com.vpn.app/.VpnService")
     }
 }
