@@ -1,28 +1,34 @@
-package com.abusalem.guardian.auth
+package com.abusalem.guard.ui
 
-import android.app.AlertDialog import android.content.Context import android.widget.EditText import android.widget.Toast
+import android.app.AlertDialog
+import android.content.Context
+import android.view.LayoutInflater
+import android.widget.EditText
+import android.widget.Toast
+import com.abusalem.guard.R
+import com.abusalem.guard.security.PasswordProtectionManager
 
-object PasswordDialog { private const val MASTER_PASSWORD = "AbuSalemX2025"
+class PasswordDialog(
+    context: Context,
+    onSuccess: () -> Unit
+) {
+    private val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_password, null)
+    private val passwordInput = dialogView.findViewById<EditText>(R.id.passwordInput)
 
-fun show(context: Context, onSuccess: () -> Unit) {
-    val input = EditText(context)
-    input.hint = "أدخل كلمة السر"
-
-    AlertDialog.Builder(context)
-        .setTitle("الدخول إلى أداة أبو سالم")
-        .setMessage("يرجى إدخال كلمة السر للوصول")
-        .setView(input)
+    private val dialog = AlertDialog.Builder(context)
+        .setTitle("دخول محمي")
+        .setView(dialogView)
+        .setCancelable(false)
         .setPositiveButton("دخول") { _, _ ->
-            if (input.text.toString() == MASTER_PASSWORD) {
-                Toast.makeText(context, "تم الدخول بنجاح", Toast.LENGTH_SHORT).show()
+            val input = passwordInput.text.toString()
+            if (PasswordProtectionManager.isPasswordValid(input)) {
                 onSuccess()
             } else {
-                Toast.makeText(context, "كلمة السر غير صحيحة", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "كلمة المرور غير صحيحة", Toast.LENGTH_SHORT).show()
+                show() // إعادة المحاولة
             }
         }
-        .setCancelable(false)
-        .show()
-}
+        .create()
 
+    fun show() = dialog.show()
 }
-
