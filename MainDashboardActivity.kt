@@ -1,18 +1,17 @@
-package com.abusalem.guard
+package com.abusalem.guardian
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.abusalem.guard.engine.ParallelReportSenderWithImages
-import com.abusalem.guard.fake.FakeAccountManager
-import com.abusalem.guard.ui.TargetNumberDialog
-import com.abusalem.guard.ui.LogsViewerActivity
+import com.abusalem.guardian.modules.*
+import com.abusalem.guardian.utils.*
 
 class MainDashboardActivity : AppCompatActivity() {
 
-    private lateinit var btnControlPanel: Button
+    private lateinit var btnStart: Button
+    private lateinit var btnControl: Button
     private lateinit var btnChangeTarget: Button
     private lateinit var btnViewLogs: Button
     private lateinit var btnLaunchAttack: Button
@@ -23,13 +22,19 @@ class MainDashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        btnControlPanel = findViewById(R.id.btnControlPanel)
+        btnStart = findViewById(R.id.btnStart)
+        btnControl = findViewById(R.id.btnControl)
         btnChangeTarget = findViewById(R.id.btnChangeTarget)
         btnViewLogs = findViewById(R.id.btnViewLogs)
         btnLaunchAttack = findViewById(R.id.btnLaunchAttack)
         statusText = findViewById(R.id.statusText)
 
-        btnControlPanel.setOnClickListener {
+        btnStart.setOnClickListener {
+            statusText.text = "جاري تشغيل الأنظمة..."
+            AutoScheduler.scheduleAll(this)
+        }
+
+        btnControl.setOnClickListener {
             startActivity(Intent(this, ControlPanelActivity::class.java))
         }
 
@@ -42,17 +47,12 @@ class MainDashboardActivity : AppCompatActivity() {
         }
 
         btnViewLogs.setOnClickListener {
-            startActivity(Intent(this, LogsViewerActivity::class.java))
+            val intent = Intent(this, LogsViewerActivity::class.java)
+            startActivity(intent)
         }
 
         btnLaunchAttack.setOnClickListener {
-            ParallelReportSenderWithImages.sendReportsInParallel(
-                this,
-                FakeAccountManager.getAllAccounts(),
-                targetNumber
-            )
+            ParallelReportSenderWithImages.sendReportsInParallel(this, FakeAccountManager.getAllAccounts(), targetNumber)
         }
-
-        statusText.text = "الهدف الحالي: $targetNumber"
     }
 }
