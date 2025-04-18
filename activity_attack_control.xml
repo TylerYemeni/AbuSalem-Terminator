@@ -1,0 +1,59 @@
+<!-- res/layout/activity_attack_control.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="#111111">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="وحدة التحكم بالهجوم"
+            android:textSize="20sp"
+            android:textColor="#00FF88"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <EditText
+            android:id="@+id/edtAccountCount"
+            android:hint="عدد الحسابات المستخدمة"
+            android:inputType="number"
+            android:textColor="#FFFFFF"
+            android:background="#222222"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/edtReportsPerMinute"
+            android:hint="عدد البلاغات في الدقيقة"
+            android:inputType="number"
+            android:textColor="#FFFFFF"
+            android:background="#222222"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnStartAttack"
+            android:text="بدء الهجوم"
+            android:layout_marginTop="24dp"
+            android:textColor="#FFFFFF"
+            android:background="#990000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnStopAttack"
+            android:text="إيقاف الهجوم"
+            android:layout_marginTop="12dp"
+            android:textColor="#FFFFFF"
+            android:background="#006600"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>
