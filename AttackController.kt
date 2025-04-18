@@ -1,31 +1,30 @@
-package com.abusalem.guard.attack
+package com.abusalem.guard.controller
 
 import android.content.Context
-import kotlinx.coroutines.*
-import com.abusalem.guard.login.FakeLoginManager
-import com.abusalem.guard.vpn.VPNManager
+import com.abusalem.guard.accounts.FakeAccountManager
+import com.abusalem.guard.sender.ParallelReportSenderWithImages
 
 object AttackController {
 
-    var attackPerMinute = 100
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    fun launchMassiveAttack(
+        context: Context,
+        targetNumber: String,
+        accountsCount: Int = 50,
+        reportsPerMinute: Int = 100
+    ) {
+        val fakeAccounts = FakeAccountManager.generateFakeAccounts(accountsCount)
+        val reportsPerSecond = reportsPerMinute / 60.0
+        val delayMillis = (1000 / reportsPerSecond).toLong()
 
-    fun launchMassAttack(context: Context, targetNumber: String, reportType: String) {
-        repeat(attackPerMinute) {
-            coroutineScope.launch {
-                val fakeAccount = FakeLoginManager.generateFakeAccount(context)
-                VPNManager.changeVPN()
-
-                ReportSender.sendReport(
+        for (i in 0 until fakeAccounts.size) {
+            val accountId = fakeAccounts[i]
+            android.os.Handler().postDelayed({
+                ParallelReportSenderWithImages.sendReportsInParallel(
                     context,
-                    targetNumber,
-                    reportType,
-                    fakeAccount.phoneNumber,
-                    fakeAccount.displayName,
-                    fakeAccount.profileImageUri
+                    listOf(accountId),
+                    targetNumber
                 )
-            }
-            delay((60000L / attackPerMinute))
+            }, i * delayMillis)
         }
     }
 }
