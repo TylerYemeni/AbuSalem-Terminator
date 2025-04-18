@@ -2,8 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#111111">
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,27 +12,19 @@
 
         <TextView
             android:id="@+id/statusText"
-            android:text="جاهز للتنفيذ"
-            android:textColor="#00FF00"
+            android:text="جاري تحميل الهدف..."
+            android:textColor="#00FF99"
             android:textSize="18sp"
-            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center" />
 
         <Button
             android:id="@+id/btnStartAttack"
-            android:text="بدء الهجوم الآن"
+            android:text="بدء الهجوم"
             android:textColor="#FFFFFF"
-            android:background="#CC0000"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/btnSettings"
-            android:text="إعدادات التحكم"
-            android:textColor="#FFFFFF"
-            android:background="#333399"
-            android:layout_marginTop="16dp"
+            android:background="#880000"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -51,6 +43,33 @@
             android:textColor="#FFFFFF"
             android:background="#444444"
             android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnAdvancedControl"
+            android:text="وحدة التحكم المتقدمة"
+            android:textColor="#FFFFFF"
+            android:background="#990000"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnQuickAttack"
+            android:text="هجوم سريع"
+            android:textColor="#FFFFFF"
+            android:background="#333366"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnVPNControl"
+            android:text="تبديل VPN"
+            android:textColor="#FFFFFF"
+            android:background="#225522"
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
