@@ -2,19 +2,14 @@ name: Build AbuSalem APK
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build:
-    name: Build APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up JDK 17
@@ -34,7 +29,3 @@ jobs:
         with:
           name: AbuSalem-APK
           path: app/build/outputs/apk/debug/app-debug.apk
-- name: Download artifact
-  uses: actions/download-artifact@v3
-  with:
-    name: upload-artifact-1
